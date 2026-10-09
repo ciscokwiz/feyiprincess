@@ -4,7 +4,7 @@ export interface PlannerTask { id: string; title: string; completed: boolean }
 export interface ContactFormValues { name: string; email: string; phone: string; message: string }
 export interface ScheduleItem { focus: string; outcome: string; status: string }
 export const profile: Profile = {
- name: 'Feyi Princess', introduction: 'A portfolio of work, ideas, and the small steps that move them forward.',
+ name: 'Uchechukwu Precious Onuoma', introduction: 'A portfolio of work, ideas, and the small steps that move them forward.',
  direction: 'Add your career direction here — the problems you want to work on and the teams you want to join.',
  education: 'Add your course, institution, and graduation year.',
  interests: ['Add an interest you return to', 'Add something you are currently exploring'],

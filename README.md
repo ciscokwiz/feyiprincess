@@ -1,4 +1,4 @@
-# Feyi Princess — portfolio & planner
+# Uchechukwu Precious Onuoma — portfolio & planner
 
 An editorial portfolio built with Next.js App Router, React, strict TypeScript, and Tailwind CSS. Five routes share design tokens and accessible navigation without repeating one page composition.
 
