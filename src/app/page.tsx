@@ -1,0 +1,8 @@
+import { Arrow } from '@/components/arrow';
+import Link from 'next/link';
+import { profile, projects } from '@/lib/content';
+import { Media } from '@/components/media';
+import { ProjectEntry } from '@/components/project';
+export default function Home() {
+ return <><section className="home-hero"><div className="hero-copy"><div className="meta eyebrow"><span className="blue-marker" />PERSONAL INDEX / 01</div><h1>{profile.name.split(' ')[0]}<br /><span className="blue">{profile.name.split(' ').slice(1).join(' ')}.</span></h1><p className="intro">{profile.introduction}</p><div className="actions"><Link className="button" href="/projects">Explore the work <span><Arrow /></span></Link><Link className="text-link" href="/about">A little about me <Arrow /></Link></div><div className="hero-note meta">WORK IN PROGRESS.<br />ROOM FOR WHAT COMES NEXT.</div></div><div className="hero-image"><Media src={profile.portrait} label="Your portrait goes here" portrait /><div className="image-caption"><span className="meta">FIG. 01 / THE PERSON BEHIND THE WORK</span><span><Arrow /></span></div></div></section><section className="section"><div className="section-heading"><div><span className="meta">01 / SELECTED WORK</span><h2>Ideas made tangible.</h2></div><Link className="text-link" href="/projects">All projects <Arrow /></Link></div><ProjectEntry project={projects[0]} featured /></section><section className="planner-callout"><span className="meta">02 / A PRACTICAL LITTLE SPACE</span><h2>Make room for<br />the next step.</h2><div><p>A simple planner for the tasks you want to move forward. Your list stays in this browser.</p><Link href="/planner" className="button light">Open the planner <Arrow /></Link></div></section></>;
+}
