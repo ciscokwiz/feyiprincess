@@ -1,0 +1,379 @@
+/* About page --------------------------------------------------------------- */
+
+.about-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.5rem, 2rem + 3vw, 5rem) clamp(4rem, 3rem + 3vw, 6rem);
+}
+.about-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+  gap: clamp(2rem, 1rem + 4vw, 5rem);
+  align-items: center;
+}
+.about-hero__stickers {
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-6);
+  gap: var(--space-4);
+}
+.about-hero__media {
+  position: relative;
+  max-width: 380px;
+  width: 100%;
+  justify-self: center;
+}
+.about-hero__media::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -8% auto;
+  width: 46%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--c-rose);
+  opacity: 0.9;
+  z-index: -1;
+}
+
+/* Education timeline */
+.about-two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 1rem + 3vw, 4rem);
+}
+.about-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 28px;
+  position: relative;
+  display: grid;
+  gap: var(--space-5);
+}
+.about-timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 12px;
+  bottom: 12px;
+  width: 4px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(to bottom, var(--c-burgundy) 0 10px, transparent 10px 18px);
+}
+.about-timeline__item {
+  position: relative;
+}
+.about-timeline__dot {
+  position: absolute;
+  left: -28px;
+  top: 28px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--c-marigold);
+  border: 4px solid var(--c-burgundy);
+}
+.about-timeline__card {
+  padding: var(--space-5) var(--space-6);
+  background: var(--c-ivory);
+  box-shadow: none;
+}
+.about-timeline__card h3 {
+  margin: var(--space-3) 0 var(--space-2);
+}
+.about-timeline__meta {
+  margin: 0;
+  color: var(--c-ink-soft);
+}
+.about-timeline__item:nth-child(2) .about-timeline__card {
+  transform: rotate(0.6deg);
+}
+
+/* Certificate card */
+.about-cert {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-6);
+  max-width: 820px;
+  padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 100% 0%, var(--c-marigold-tint) 0 22%, transparent 22.5%),
+    var(--c-white);
+  border: 3px solid var(--c-burgundy);
+  box-shadow: 10px 10px 0 var(--c-rose);
+  transform: rotate(-0.8deg);
+  transition: transform var(--dur-med) var(--ease-spring);
+}
+.about-cert:hover {
+  transform: rotate(0deg) translateY(-4px);
+}
+.about-cert__ribbon {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: var(--c-burgundy);
+  color: var(--c-marigold);
+  font-size: 2rem;
+  box-shadow: 0 0 0 6px var(--c-marigold-tint), 0 0 0 9px var(--c-burgundy);
+}
+.about-cert__issuer {
+  margin: 0 0 var(--space-2);
+  font-weight: 600;
+  color: var(--c-berry);
+}
+.about-cert__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-7);
+  margin: 0 0 var(--space-5);
+}
+.about-cert__meta dt {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-ink-soft);
+}
+.about-cert__meta dd {
+  margin: 0;
+  font-weight: 500;
+  word-break: break-all;
+}
+.about-cert__meta code {
+  font-size: var(--fs-sm);
+  padding: 0.1rem 0.45rem;
+  border-radius: 6px;
+  background: var(--c-ivory);
+}
+
+/* Aspirations */
+.about-aspire__quote {
+  margin: 0 0 var(--space-7);
+  max-width: 28ch;
+  font: 600 clamp(1.6rem, 1.1rem + 2.2vw, 2.75rem) / 1.2 var(--font-display);
+  letter-spacing: -0.02em;
+}
+.about-aspire__quote p {
+  margin: 0;
+}
+.about-aspire__quote::before {
+  content: "\201C";
+  display: block;
+  height: 0.5em;
+  font-size: 3em;
+  line-height: 1;
+  color: var(--c-marigold);
+}
+.about-aspire__cols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6);
+  color: var(--c-rose-tint);
+}
+
+/* Learning journey */
+.about-journey {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 120px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+}
+.about-journey__stop {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--c-ivory);
+}
+.about-journey__stop--next {
+  background: transparent;
+  border: 3px dashed var(--c-burgundy-soft);
+  transform: rotate(1deg);
+}
+.about-journey__stop h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+.about-journey__badge {
+  padding: 0.2rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--c-burgundy);
+  color: var(--c-white);
+  font: 600 var(--fs-xs) / 1.4 var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.about-journey__badge--next {
+  background: var(--c-marigold);
+  color: var(--c-ink);
+}
+.about-journey__chips {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.about-journey__chips .chip {
+  font-size: var(--fs-sm);
+  padding: 0.45rem 0.95rem;
+}
+.about-journey__chip--next {
+  background: var(--c-white);
+  border: 2px dashed var(--c-brown);
+  color: var(--c-ink);
+}
+.about-journey__path {
+  width: 120px;
+  color: var(--c-rose);
+}
+
+/* Soft skills */
+.about-soft {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-7);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.about-soft__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--c-white);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  line-height: 1.35;
+  transition: transform var(--dur-med) var(--ease-spring);
+}
+.about-soft__item:hover {
+  transform: translateY(-4px) rotate(-1deg);
+}
+.about-soft__icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--c-ivory);
+  font-size: 1.2rem;
+}
+.about-soft__note {
+  margin: 0;
+  max-width: 760px;
+  padding-left: var(--space-5);
+  border-left: 6px solid var(--c-teal-deep);
+  font: italic 500 var(--fs-lg) / 1.55 var(--font-display);
+  color: var(--c-ink);
+}
+
+/* Hobbies */
+.about-hobbies {
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(2rem, 1rem + 3vw, 4rem);
+  align-items: start;
+}
+.about-hobbies__photo {
+  margin-top: var(--space-5);
+  transform: rotate(-2.5deg);
+  box-shadow: var(--shadow-lift);
+  border: 8px solid var(--c-white);
+}
+.about-hobbies__grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+.about-hobby {
+  padding: var(--space-5);
+  background: var(--c-white);
+}
+.about-hobby:nth-child(3n + 2) {
+  transform: translateY(var(--space-5));
+}
+.about-hobby:nth-child(3n + 2):hover {
+  transform: translateY(calc(var(--space-5) - 6px)) rotate(var(--hover-tilt));
+}
+.about-hobby__art {
+  width: 84px;
+  height: 84px;
+  margin-bottom: var(--space-3);
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--hobby-tint);
+  transition: transform var(--dur-med) var(--ease-spring);
+}
+.about-hobby:hover .about-hobby__art {
+  transform: rotate(-12deg) scale(1.08);
+}
+.about-hobby h3 {
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-2);
+}
+.about-hobby p {
+  margin: 0;
+  font-size: var(--fs-sm);
+  color: var(--c-ink-soft);
+}
+
+@media (max-width: 1024px) {
+  .about-soft {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .about-hobbies__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .about-hobby:nth-child(3n + 2) {
+    transform: none;
+  }
+  .about-hobby:nth-child(even) {
+    transform: translateY(var(--space-4));
+  }
+}
+
+@media (max-width: 860px) {
+  .about-hero__grid,
+  .about-two-col,
+  .about-hobbies {
+    grid-template-columns: 1fr;
+  }
+  .about-hero__media {
+    max-width: 300px;
+  }
+  .about-aspire__cols {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .about-journey {
+    grid-template-columns: 1fr;
+  }
+  .about-journey__path {
+    justify-self: center;
+    transform: rotate(90deg);
+    width: 80px;
+  }
+  .about-cert {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .about-soft,
+  .about-hobbies__grid {
+    grid-template-columns: 1fr;
+  }
+  .about-hobby:nth-child(n) {
+    transform: none;
+  }
+}

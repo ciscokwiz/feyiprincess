@@ -1,0 +1,189 @@
+/* Projects page ------------------------------------------------------------ */
+
+.projects-hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(2.5rem, 2rem + 3vw, 5rem) clamp(4rem, 3rem + 3vw, 6rem);
+}
+.projects-hero h1 {
+  max-width: 14ch;
+}
+.projects-hero__dot {
+  right: 12%;
+  top: 30%;
+  width: 70px;
+  height: 70px;
+  background: var(--c-rose-tint);
+}
+
+/* Staggered, varied-size layout on a 6-column grid */
+.projects-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
+  align-items: start;
+}
+.project-card {
+  grid-column: span 2;
+}
+.project-card:nth-child(1) {
+  grid-column: 1 / span 3;
+}
+.project-card--featured {
+  grid-column: 4 / span 3;
+  margin-top: var(--space-7);
+}
+.project-card:nth-child(4) {
+  margin-top: var(--space-6);
+}
+.project-card--soon {
+  grid-column: 1 / -1;
+}
+.project-card--soon .project-card__body {
+  max-width: 760px;
+}
+
+.project-card__inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  background: var(--c-ivory);
+  overflow: hidden;
+  transition:
+    transform var(--dur-med) var(--ease-spring),
+    box-shadow var(--dur-med) var(--ease-out);
+}
+.project-card:hover .project-card__inner,
+.project-card:focus-within .project-card__inner {
+  transform: translateY(-6px) rotate(var(--hover-tilt, -1deg));
+  box-shadow: var(--shadow-lift);
+}
+.project-card__cover {
+  position: relative;
+}
+.project-card__cover .photo-slot {
+  border-radius: 0;
+}
+.project-card__num {
+  position: absolute;
+  left: var(--space-5);
+  bottom: calc(-1 * var(--space-5));
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--c-burgundy);
+  color: var(--c-white);
+  font: 800 1.1rem/1 var(--font-display);
+  box-shadow: 0 0 0 5px var(--c-ivory);
+}
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: var(--space-7) var(--space-6) var(--space-6);
+}
+.project-card__client {
+  margin: 0 0 var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-berry);
+}
+.project-card__title {
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.6rem);
+}
+.project-card__summary {
+  color: var(--c-ink-soft);
+}
+.project-card__tags {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.project-card__link {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Featured: the healthcare case study */
+.project-card--featured .project-card__inner {
+  background: var(--c-burgundy);
+  color: var(--c-white);
+  --c-focus: var(--c-marigold);
+}
+.project-card--featured .project-card__title {
+  color: var(--c-white);
+  font-size: clamp(1.5rem, 1.1rem + 1.4vw, 2.2rem);
+}
+.project-card--featured .project-card__summary {
+  color: var(--c-rose-tint);
+  font-size: var(--fs-lg);
+}
+.project-card--featured .project-card__client {
+  color: var(--c-marigold);
+}
+.project-card--featured .project-card__link {
+  color: var(--c-marigold-tint);
+}
+.project-card--featured .project-card__num {
+  background: var(--c-marigold);
+  color: var(--c-ink);
+  box-shadow: 0 0 0 5px var(--c-burgundy);
+}
+.project-card__feature {
+  align-self: flex-start;
+  margin: 0 0 var(--space-4);
+}
+
+/* Coming soon */
+.project-card--soon .project-card__inner {
+  background: transparent;
+  border: 3px dashed var(--c-burgundy-soft);
+}
+.project-card--soon .project-card__body {
+  padding-top: var(--space-6);
+}
+.project-card--soon .sticker {
+  align-self: flex-start;
+  margin: 0 0 var(--space-4);
+}
+
+@media (max-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .project-card:nth-child(n),
+  .project-card--featured {
+    grid-column: auto;
+    margin-top: 0;
+  }
+  .project-card--featured,
+  .project-card--soon {
+    grid-column: 1 / -1;
+  }
+  .project-card:nth-child(even) {
+    margin-top: var(--space-6);
+  }
+  .project-card--featured:nth-child(even) {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+  .project-card:nth-child(n) {
+    margin-top: 0;
+  }
+}
