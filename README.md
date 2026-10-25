@@ -69,10 +69,9 @@ All content lives in typed data files:
 
 **To-dos for the owner**
 
-- [ ] `data/profile.ts`: replace the placeholder **email** (`hello@example.com`), **LinkedIn** and **GitHub** links, and set `placeholder: false`.
 - [ ] `data/caseStudies.ts`: the Notion pages could not be fetched while building (the build environment's network blocked `notion.site`). Each summary currently restates only its title, with nothing invented. Replace them with your own one or two sentences, and say so if a study is a hypothetical or practice scenario.
 - [ ] Rename the seven placeholder courses, either in `data/courses.ts` or in the planner under **Courses & data**.
-- [ ] Add photos (see below) and the certificate PDF.
+- [ ] Add the five case-study cover photos and the certificate PDF (see below).
 
 ## Photo slots
 
@@ -82,9 +81,9 @@ files**. To use different filenames, change the paths in `data/profile.ts` or `d
 
 | Slot | File | Recommended size | Where |
 |---|---|---|---|
-| Hero portrait | `public/images/hero.jpg` | 900 × 1100 (portrait) | Home hero (blob mask) |
-| About portrait | `public/images/about.jpg` | 900 × 1100 (portrait) | About hero (arch mask) |
-| Candid fun photo (laughing/dancing) | `public/images/candid.jpg` | 1200 × 900 (landscape) | About → Hobbies |
+| Hero portrait ✅ | `public/images/hero.jpg` | 900 × 1100 (portrait) | Home hero (blob mask) |
+| About portrait ✅ | `public/images/about.jpg` | 900 × 1100 (portrait) | About hero (arch mask) |
+| Candid fun photo ✅ | `public/images/candid.jpg` | 900 × 1125 (portrait, 4:5) | About → Hobbies ("Off the clock") |
 | NorthRoute cover | `public/images/case-northroute.jpg` | 1200 × 800 | Projects |
 | Nova Health cover | `public/images/case-nova-health.jpg` | 1200 × 800 | Projects |
 | Hashworth cover | `public/images/case-hashworth.jpg` | 1200 × 800 | Projects |

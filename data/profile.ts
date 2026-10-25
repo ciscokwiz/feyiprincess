@@ -13,14 +13,12 @@ export const profile: Profile = {
   monogram: "UO",
   role: "Data Science student · Customer Success professional · future health data researcher",
 
-  // TODO(owner): replace with your real email address.
-  email: "hello@example.com",
-  emailIsPlaceholder: true,
+  email: "uchechukwuonuoma@gmail.com",
+  emailIsPlaceholder: false,
 
-  // TODO(owner): replace the hrefs and set placeholder to false.
   socials: [
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/your-profile", placeholder: true },
-    { label: "GitHub", href: "https://github.com/your-username", placeholder: true },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/uchechukwu-csm/", placeholder: false },
+    { label: "GitHub", href: "https://github.com/uchechukwu-csm", placeholder: false },
   ],
 
   // Used for Open Graph URLs. Set NEXT_PUBLIC_SITE_URL in Vercel, or edit here.
@@ -29,24 +27,24 @@ export const profile: Profile = {
   photos: {
     hero: {
       src: "/images/hero.jpg",
-      alt: "Portrait of Uchechukwu Onuoma smiling",
+      alt: "Uchechukwu Onuoma in a pink blazer and glasses, smiling against a grey studio backdrop",
       label: "Hero portrait",
       width: 900,
       height: 1100,
     },
     about: {
       src: "/images/about.jpg",
-      alt: "Uchechukwu Onuoma at her desk with her study notes",
+      alt: "Uchechukwu smiling in a bright pink top, her long braids over one shoulder",
       label: "About-page portrait",
       width: 900,
       height: 1100,
     },
     candid: {
       src: "/images/candid.jpg",
-      alt: "Uchechukwu laughing and dancing with friends",
+      alt: "Uchechukwu in a red top and glasses, striking a playful pose",
       label: "Candid fun photo",
-      width: 1200,
-      height: 900,
+      width: 900,
+      height: 1125,
     },
   },
 

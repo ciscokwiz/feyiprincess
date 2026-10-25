@@ -286,6 +286,7 @@
   transform: rotate(-2.5deg);
   box-shadow: var(--shadow-lift);
   border: 8px solid var(--c-white);
+  max-width: 380px;
 }
 .about-hobbies__grid {
   list-style: none;
