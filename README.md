@@ -69,9 +69,8 @@ All content lives in typed data files:
 
 **To-dos for the owner**
 
-- [ ] `data/caseStudies.ts`: the Notion pages could not be fetched while building (the build environment's network blocked `notion.site`). Each summary currently restates only its title, with nothing invented. Replace them with your own one or two sentences, and say so if a study is a hypothetical or practice scenario.
 - [ ] Rename the seven placeholder courses, either in `data/courses.ts` or in the planner under **Courses & data**.
-- [ ] Add the five case-study cover photos and the certificate PDF (see below).
+- [ ] Add the certificate PDF (see below).
 
 ## Photo slots
 
@@ -84,11 +83,11 @@ files**. To use different filenames, change the paths in `data/profile.ts` or `d
 | Hero portrait ✅ | `public/images/hero.jpg` | 900 × 1100 (portrait) | Home hero (blob mask) |
 | About portrait ✅ | `public/images/about.jpg` | 900 × 1100 (portrait) | About hero (arch mask) |
 | Candid fun photo ✅ | `public/images/candid.jpg` | 900 × 1125 (portrait, 4:5) | About → Hobbies ("Off the clock") |
-| NorthRoute cover | `public/images/case-northroute.jpg` | 1200 × 800 | Projects |
-| Nova Health cover | `public/images/case-nova-health.jpg` | 1200 × 800 | Projects |
-| Hashworth cover | `public/images/case-hashworth.jpg` | 1200 × 800 | Projects |
-| Savanna Agro cover | `public/images/case-savanna-agro.jpg` | 1200 × 800 | Projects |
-| Bioseco cover | `public/images/case-bioseco.jpg` | 1200 × 800 | Projects |
+| NorthRoute cover ✅ | `public/images/case-northroute.jpg` | 1200 × 800 | Projects |
+| Nova Health cover ✅ | `public/images/case-nova-health.jpg` | 1200 × 800 | Projects |
+| Hashworth cover ✅ | `public/images/case-hashworth.jpg` | 1200 × 800 | Projects |
+| Savanna Agro cover ✅ | `public/images/case-savanna-agro.jpg` | 1200 × 800 | Projects |
+| Bioseco cover ✅ | `public/images/case-bioseco.jpg` | 1200 × 800 | Projects |
 | Intro video | `public/media/intro.webm` (or `.mp4`; update `type`) | 1280 × 720 | Home → "A quick hello" |
 | Intro video poster | `public/media/intro-poster.png` | 1280 × 720 | Poster frame for the video |
 | Intro captions | `public/media/intro-captions.vtt` | WebVTT | Captions track |
@@ -226,5 +225,4 @@ tests/e2e/            Playwright (+ axe accessibility checks)
 - No backend of its own: contact messages are handed to WhatsApp (see [Contact form](#contact-form)), and planner data lives in one browser until exported.
 - Browser notifications only fire while the site is open in a tab. Some mobile browsers (e.g. Android Chrome) don't
   allow page notifications without a service worker; in-app reminders still work there.
-- Case study summaries are title-based until the owner replaces them (see To-dos).
 - Photos, the real intro video and the certificate PDF are still to be added.
