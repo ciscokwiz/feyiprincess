@@ -19,7 +19,7 @@ It is also her **COS 106 – Introduction to Web Technologies term project** (Mi
 | `/about/` | Education timeline, AltSchool Africa certificate card, career aspirations, "learning journey" skills (no fake percentages), non-technical skills, hobbies with illustrations, **Learning milestones table** |
 | `/projects/` | Five Customer Success case studies (Notion links open in a new tab), Nova Health Clinics highlighted, "coming soon" card |
 | `/planner/` | Working academic planner: daily checklist, weekly timetable, calendar, notes, reminders, progress dashboard, courses & data tools |
-| `/contact/` | Validated contact form (demo, honest that nothing is sent), mailto fallback, social placeholders |
+| `/contact/` | Validated contact form that emails messages to her inbox (via FormSubmit), email/LinkedIn/GitHub links |
 
 ## Tech
 
@@ -117,14 +117,20 @@ Everything is saved in the browser's `localStorage` under the versioned key `uo-
 - **Dashboard:** every number is computed from recorded data (tasks, calendar events, blocks ticked off). Each widget has
   an empty state explaining what to log.
 
-## Contact form: going live
+## Contact form
 
-The form validates in the browser but **does not send anything**, and says so. After a valid submit it offers a pre-filled
-`mailto:` link. To make it really send:
+Valid messages are posted from the browser to [FormSubmit](https://formsubmit.co), which emails them to
+`uchechukwuonuoma@gmail.com`. No account, server or API key is needed. The endpoint lives in `data/profile.ts`
+(`contactFormEndpoint`), and the sending code is `lib/contactSend.ts`.
 
-1. Create a free form at [Formspree](https://formspree.io) and copy its endpoint (`https://formspree.io/f/xxxxabcd`).
-2. In `components/contact/ContactForm.tsx`, inside `onSubmit` after validation passes, `await fetch(endpoint, { method: "POST", headers: { Accept: "application/json" }, body: new FormData(event.currentTarget) })`.
-3. Show the success message only when the response is `ok`, show an error message otherwise, and update the demo notice text.
+- **One-time activation (required):** after the site is live, send one message through the form. FormSubmit then emails
+  `uchechukwuonuoma@gmail.com` an **"Activate Form"** link; click it once. Until then, messages are not delivered and the
+  form tells visitors so. Check the spam folder if the activation email doesn't arrive.
+- **Optional, after activating:** FormSubmit's confirmation gives a random alias. Put it in place of the address in
+  `contactFormEndpoint` (`https://formsubmit.co/ajax/<alias>`) to keep the email address out of the code.
+- The form shows "sent" only when FormSubmit confirms delivery. If sending fails, the visitor keeps their message and gets
+  an "Email me directly instead" link. A hidden honeypot field filters simple spam bots.
+- Tests intercept the FormSubmit request, so running them never sends real email.
 
 ## Deploy (GitHub + Vercel)
 
@@ -219,7 +225,7 @@ tests/e2e/            Playwright (+ axe accessibility checks)
 
 ## Known limitations
 
-- No backend: the contact form doesn't send, and planner data lives in one browser until exported.
+- No backend of its own: contact messages rely on FormSubmit (activate it once, see [Contact form](#contact-form)), and planner data lives in one browser until exported.
 - Browser notifications only fire while the site is open in a tab. Some mobile browsers (e.g. Android Chrome) don't
   allow page notifications without a service worker; in-app reminders still work there.
 - Case study summaries are title-based until the owner replaces them (see To-dos).

@@ -7,6 +7,8 @@ export const test = base.extend<{ consoleGuard: void }>({
       const problems: string[] = [];
       page.on("console", (msg) => {
         const text = msg.text();
+        // Tests that simulate the mail service being offline expect the browser's own network error for it.
+        if (/Failed to load resource/.test(text) && msg.location().url.includes("formsubmit.co")) return;
         if (msg.type() === "error" || /hydrat/i.test(text)) problems.push(`[${msg.type()}] ${text}`);
       });
       page.on("pageerror", (err) => problems.push(`[pageerror] ${err.message}`));

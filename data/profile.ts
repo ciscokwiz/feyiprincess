@@ -15,6 +15,10 @@ export const profile: Profile = {
 
   email: "uchechukwuonuoma@gmail.com",
   emailIsPlaceholder: false,
+  // Contact form messages go through FormSubmit (https://formsubmit.co), which forwards them to the email above.
+  // The first message triggers a one-time "Activate Form" email to that inbox; nothing is delivered until it is clicked.
+  // After activating, you can swap the address here for the random alias FormSubmit gives you, to keep it out of the code.
+  contactFormEndpoint: "https://formsubmit.co/ajax/uchechukwuonuoma@gmail.com",
 
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/uchechukwu-csm/", placeholder: false },

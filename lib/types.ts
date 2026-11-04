@@ -82,6 +82,8 @@ export interface Profile {
   role: string;
   email: string;
   emailIsPlaceholder: boolean;
+  /** Where the contact form posts messages (a FormSubmit AJAX endpoint that forwards them to her inbox). */
+  contactFormEndpoint: string;
   socials: SocialLink[];
   siteUrl: string;
   photos: {
