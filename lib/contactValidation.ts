@@ -37,10 +37,3 @@ export function buildWhatsAppLink(number: string, values: ContactFormValues): st
   ].join("\n");
   return `https://wa.me/${number.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
 }
-
-/** Builds a mailto: link with the message pre-filled, as an honest way to actually send it. */
-export function buildMailto(to: string, values: ContactFormValues): string {
-  const subject = `Hello from ${values.name.trim() || "your website"}`;
-  const body = `${values.message.trim()}\n\n${values.name.trim()}\n${values.email.trim()}\n${values.phone.trim()}`;
-  return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}

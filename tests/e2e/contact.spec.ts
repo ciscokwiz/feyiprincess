@@ -71,7 +71,7 @@ test("a valid message opens WhatsApp with the message ready to send", async ({ p
   // Compare decoded text: the browser may re-encode characters like ' in the popup's URL.
   const again = new URL((await status.getByRole("link", { name: /Open WhatsApp again/ }).getAttribute("href")) ?? "");
   expect(again.searchParams.get("text")).toBe(text);
-  await expect(status.getByRole("link", { name: /Email me instead/ })).toHaveAttribute("href", /^mailto:uchechukwuonuoma@gmail\.com/);
+  await expect(status.getByRole("link", { name: /Email me instead/ })).toHaveCount(0);
   await expect(page.getByText(/has been sent/)).toHaveCount(0);
 });
 

@@ -125,7 +125,7 @@ and computers (WhatsApp Web or Desktop), and needs no server, account or API key
 - The number is set once at the top of `data/profile.ts` (`WHATSAPP_NUMBER`), in international format with digits only:
   country code then number, no `+` or leading `0` (e.g. `2348012345678`). The same number is listed under "Say hello".
 - The site can't see whether the visitor pressed Send in WhatsApp, so it never claims the message was delivered. If a
-  popup blocker stops WhatsApp opening, the form shows an "Open WhatsApp" button, plus an "Email me instead" link.
+  popup blocker stops WhatsApp opening, the form shows an "Open WhatsApp" button instead. Messages are not sent by email.
 - Phone numbers may start with `+` and a country code (e.g. `+2348012345678`); otherwise digits only, 7–15 digits.
 - Tests answer `wa.me` requests locally, so running them never opens a real chat.
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
-import { buildMailto, buildWhatsAppLink, CONTACT_FIELDS, validateContact } from "@/lib/contactValidation";
+import { buildWhatsAppLink, CONTACT_FIELDS, validateContact } from "@/lib/contactValidation";
 import { scrollToFirstInvalid } from "@/lib/dom";
 import type { ContactErrors, ContactField, ContactFormValues } from "@/lib/types";
 
@@ -22,7 +22,7 @@ const FIELD_META: Record<ContactField, { label: string; hint?: string; autoCompl
  * A valid message opens WhatsApp with the text ready to send to her number.
  * The site can't see whether it was sent, so it never claims it was.
  */
-export function ContactForm({ recipient, whatsappNumber }: { recipient: string; whatsappNumber: string }) {
+export function ContactForm({ whatsappNumber }: { whatsappNumber: string }) {
   const [values, setValues] = useState<ContactFormValues>(EMPTY);
   const [errors, setErrors] = useState<ContactErrors>({});
   const [attempted, setAttempted] = useState(false);
@@ -175,13 +175,10 @@ export function ContactForm({ recipient, whatsappNumber }: { recipient: string; 
                 ? "WhatsApp opened in a new tab with your message ready. Tap Send in WhatsApp to deliver it."
                 : "Tap the button below to open WhatsApp with your message ready, then tap Send there."}
             </p>
-            <p className="cluster">
+            <p>
               <a className="btn btn--sm" href={handedOff.link} target="_blank" rel="noopener noreferrer">
                 {handedOff.opened ? "Open WhatsApp again" : "Open WhatsApp"}
                 <span className="visually-hidden"> (opens in a new tab)</span>
-              </a>
-              <a className="btn btn--ghost btn--sm" href={buildMailto(recipient, handedOff.values)}>
-                Email me instead
               </a>
             </p>
           </div>

@@ -9,7 +9,7 @@ import type { Profile } from "@/lib/types";
  */
 // WhatsApp number in international format, digits only: country code then number, no + or leading 0 (e.g. 2348012345678).
 // The contact form opens WhatsApp with the visitor's message ready to send here, and it's listed under "Say hello".
-const WHATSAPP_NUMBER = "WHATSAPP_NUMBER";
+const WHATSAPP_NUMBER = "2348115484067";
 
 export const profile: Profile = {
   fullName: "Uchechukwu Precious Onuoma",
@@ -22,7 +22,7 @@ export const profile: Profile = {
   whatsappNumber: WHATSAPP_NUMBER,
 
   socials: [
-    { label: "WhatsApp", href: `https://wa.me/${WHATSAPP_NUMBER}`, placeholder: false },
+    { label: "WhatsApp", href: `https://wa.me/${WHATSAPP_NUMBER}`, placeholder: false, display: "+234 811 548 4067" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/uchechukwu-csm/", placeholder: false },
     { label: "GitHub", href: "https://github.com/uchechukwu-csm", placeholder: false },
   ],

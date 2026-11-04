@@ -44,7 +44,7 @@ export default function ContactPage() {
                 <li key={s.label}>
                   <span className="contact-aside__label">{s.label}</span>
                   <a href={s.href} target="_blank" rel="noopener noreferrer">
-                    {s.href.replace(/^https?:\/\/(www\.)?/, "")}
+                    {s.display ?? s.href.replace(/^https?:\/\/(www\.)?/, "")}
                     <span className="visually-hidden"> (opens in a new tab)</span>
                   </a>
                   {s.placeholder ? <span className="chip chip--sun">Placeholder</span> : null}
@@ -56,7 +56,7 @@ export default function ContactPage() {
           <div className="contact-main">
             <h2 id="contact-form-title">Send a message</h2>
             <p className="field__hint">All fields are required.</p>
-            <ContactForm recipient={profile.email} whatsappNumber={profile.whatsappNumber} />
+            <ContactForm whatsappNumber={profile.whatsappNumber} />
           </div>
         </div>
       </section>

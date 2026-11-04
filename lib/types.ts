@@ -27,6 +27,8 @@ export interface SocialLink {
   href: string;
   /** True while the link still points at a placeholder value. */
   placeholder: boolean;
+  /** Text shown for the link on the contact page; defaults to the URL without https://. */
+  display?: string;
 }
 
 export interface Education {

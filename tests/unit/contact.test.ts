@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildMailto, buildWhatsAppLink, firstInvalidField, validateContact } from "@/lib/contactValidation";
+import { buildWhatsAppLink, firstInvalidField, validateContact } from "@/lib/contactValidation";
 
 const valid = { name: "Ada", email: "ada@example.com", phone: "08012345678", message: "Hello!" };
 
@@ -40,11 +40,5 @@ describe("validateContact", () => {
     expect(text).toContain("Email: ada@example.com");
     expect(text).toContain("Phone: +2348012345678");
     expect(text.endsWith("Hello!")).toBe(true);
-  });
-
-  it("builds an encoded mailto link", () => {
-    const href = buildMailto("me@example.com", valid);
-    expect(href.startsWith("mailto:me@example.com?subject=Hello%20from%20Ada")).toBe(true);
-    expect(href).toContain(encodeURIComponent("Hello!"));
   });
 });
