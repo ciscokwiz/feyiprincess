@@ -101,6 +101,7 @@ export const plannerDataSchema: z.ZodType<PlannerData> = z.object({
 
 export const PHONE_MIN_DIGITS = 7;
 export const PHONE_MAX_DIGITS = 15;
+const phoneDigits = (v: string): string => v.trim().replace(/^\+/, "");
 
 export const contactSchema: z.ZodType<ContactFormValues> = z.object({
   name: z.string().trim().min(1, "Please tell me your name.").max(100, "That name is a little long. Keep it under 100 characters."),
@@ -113,8 +114,9 @@ export const contactSchema: z.ZodType<ContactFormValues> = z.object({
     .string()
     .trim()
     .min(1, "Please add a phone number.")
-    .regex(/^\d+$/, "Use digits only (0–9), with no spaces, dashes or + sign.")
-    .min(PHONE_MIN_DIGITS, `A phone number needs at least ${PHONE_MIN_DIGITS} digits.`)
-    .max(PHONE_MAX_DIGITS, `A phone number can have at most ${PHONE_MAX_DIGITS} digits.`),
+    // Digits only, with an optional + in front for the country code (e.g. +2348012345678).
+    .regex(/^\+?\d+$/, "Use digits only, with an optional + and country code at the start, e.g. +2348012345678.")
+    .refine((v) => phoneDigits(v).length >= PHONE_MIN_DIGITS, `A phone number needs at least ${PHONE_MIN_DIGITS} digits.`)
+    .refine((v) => phoneDigits(v).length <= PHONE_MAX_DIGITS, `A phone number can have at most ${PHONE_MAX_DIGITS} digits.`),
   message: z.string().trim().min(1, "Please write a message.").max(2000, "Please keep your message under 2,000 characters."),
 });

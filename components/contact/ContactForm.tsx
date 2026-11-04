@@ -1,17 +1,16 @@
 "use client";
 
-import { useRef, useState, type ChangeEvent, type FormEvent, type Ref } from "react";
-import { buildMailto, CONTACT_FIELDS, validateContact } from "@/lib/contactValidation";
-import { sendContactMessage, type SendResult } from "@/lib/contactSend";
+import { useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { buildMailto, buildWhatsAppLink, CONTACT_FIELDS, validateContact } from "@/lib/contactValidation";
 import { scrollToFirstInvalid } from "@/lib/dom";
 import type { ContactErrors, ContactField, ContactFormValues } from "@/lib/types";
 
 const EMPTY: ContactFormValues = { name: "", email: "", phone: "", message: "" };
 
-const FIELD_META: Record<ContactField, { label: string; hint?: string; autoComplete: string; type?: string; inputMode?: "numeric" | "email" }> = {
+const FIELD_META: Record<ContactField, { label: string; hint?: string; autoComplete: string; type?: string; inputMode?: "tel" | "email" }> = {
   name: { label: "Name", autoComplete: "name" },
   email: { label: "Email", autoComplete: "email", type: "email", inputMode: "email", hint: "So I can reply to you." },
-  phone: { label: "Phone", autoComplete: "tel", inputMode: "numeric", hint: "Digits only, e.g. 08012345678." },
+  phone: { label: "Phone", autoComplete: "tel", type: "tel", inputMode: "tel", hint: "Include your country code, e.g. +2348012345678." },
   message: { label: "Message", autoComplete: "off" },
 };
 
@@ -20,23 +19,21 @@ const FIELD_META: Record<ContactField, { label: string; hint?: string; autoCompl
  * Validation runs in TypeScript on submit and then live per field. Errors are
  * announced via aria-describedby / aria-invalid, focus jumps to the first
  * invalid field, and submission is blocked until everything is valid.
- * Valid messages are posted to FormSubmit, which emails them to her inbox.
- * "Sent" is only shown once the service confirms delivery.
+ * A valid message opens WhatsApp with the text ready to send to her number.
+ * The site can't see whether it was sent, so it never claims it was.
  */
-export function ContactForm({ recipient, endpoint }: { recipient: string; endpoint: string }) {
+export function ContactForm({ recipient, whatsappNumber }: { recipient: string; whatsappNumber: string }) {
   const [values, setValues] = useState<ContactFormValues>(EMPTY);
   const [errors, setErrors] = useState<ContactErrors>({});
   const [attempted, setAttempted] = useState(false);
-  const [sending, setSending] = useState(false);
-  const [result, setResult] = useState<{ outcome: SendResult; values: ContactFormValues } | null>(null);
+  const [handedOff, setHandedOff] = useState<{ values: ContactFormValues; link: string; opened: boolean } | null>(null);
   const fieldRefs = useRef<Partial<Record<ContactField, HTMLInputElement | HTMLTextAreaElement | null>>>({});
-  const honeypotRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
   const onChange = (field: ContactField) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const next = { ...values, [field]: event.target.value };
     setValues(next);
-    if (result?.outcome.status !== "failed") setResult(null);
+    setHandedOff(null);
     // After the first submit, keep each field's message in sync as she types.
     if (attempted) {
       const nextErrors = validateContact(next);
@@ -50,31 +47,26 @@ export function ContactForm({ recipient, endpoint }: { recipient: string; endpoi
     setErrors((prev) => ({ ...prev, [field]: nextErrors[field] }));
   };
 
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (sending) return;
     setAttempted(true);
     const nextErrors = validateContact(values);
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
-      setResult(null);
+      setHandedOff(null);
       // Wait one frame so aria-invalid is in the DOM before we look for it.
       requestAnimationFrame(() => scrollToFirstInvalid(CONTACT_FIELDS.map((f) => fieldRefs.current[f] ?? null)));
       return;
     }
 
-    const submitted = values;
-    setSending(true);
-    setResult(null);
-    // A filled honeypot means a bot: quietly skip sending.
-    const outcome: SendResult = honeypotRef.current?.value ? { status: "sent" } : await sendContactMessage(endpoint, submitted);
-    setSending(false);
-    setResult({ outcome, values: submitted });
-    if (outcome.status === "sent") {
-      setValues(EMPTY);
-      setAttempted(false);
-    }
+    const link = buildWhatsAppLink(whatsappNumber, values);
+    // Opened straight from the submit click, so browsers allow it. If a popup blocker still says no, the button below works.
+    // ("noopener" would make window.open always return null, so the opener link is cut by hand instead.)
+    const tab = window.open(link, "_blank");
+    if (tab) tab.opener = null;
+    const opened = tab !== null;
+    setHandedOff({ values, link, opened });
     requestAnimationFrame(() => resultRef.current?.focus());
   };
 
@@ -82,26 +74,21 @@ export function ContactForm({ recipient, endpoint }: { recipient: string; endpoi
     setValues(EMPTY);
     setErrors({});
     setAttempted(false);
-    setResult(null);
+    setHandedOff(null);
     fieldRefs.current.name?.focus();
   };
 
   const errorCount = Object.values(errors).filter(Boolean).length;
 
   return (
-    <form className="contact-form" noValidate onSubmit={onSubmit} aria-describedby="contact-privacy-note" aria-busy={sending}>
-      <p id="contact-privacy-note" className="notice notice--info contact-form__demo">
-        <span aria-hidden="true">✉️</span>
+    <form className="contact-form" noValidate onSubmit={onSubmit} aria-describedby="contact-whatsapp-note">
+      <p id="contact-whatsapp-note" className="notice notice--info contact-form__demo">
+        <span aria-hidden="true">💬</span>
         <span>
-          Your message comes straight to my inbox. Your details are only used to reply to you.
+          Your message is sent to me on <strong>WhatsApp</strong>. When you press the button, WhatsApp opens with your message
+          ready. Just tap <strong>Send</strong> there.
         </span>
       </p>
-
-      {/* Honeypot for spam bots: hidden from people and assistive tech. */}
-      <div className="visually-hidden" aria-hidden="true">
-        <label htmlFor="contact-website">Leave this empty</label>
-        <input ref={honeypotRef} id="contact-website" name="_honey" type="text" tabIndex={-1} autoComplete="off" />
-      </div>
 
       <div role="alert" aria-live="assertive" className={attempted && errorCount > 0 ? "notice notice--danger" : "visually-hidden"}>
         {attempted && errorCount > 0 ? (
@@ -152,7 +139,6 @@ export function ContactForm({ recipient, endpoint }: { recipient: string; endpoi
                   className="input"
                   type={meta.type ?? "text"}
                   inputMode={meta.inputMode}
-                  pattern={field === "phone" ? "[0-9]*" : undefined}
                 />
               )}
               {meta.hint ? (
@@ -171,57 +157,36 @@ export function ContactForm({ recipient, endpoint }: { recipient: string; endpoi
       </div>
 
       <div className="cluster contact-form__actions">
-        <button type="submit" className="btn" disabled={sending}>
-          {sending ? "Sending…" : "Send message"} {sending ? null : <span aria-hidden="true">→</span>}
+        <button type="submit" className="btn">
+          Send on WhatsApp <span aria-hidden="true">→</span>
         </button>
-        <button type="button" className="btn btn--ghost" onClick={reset} disabled={sending}>
+        <button type="button" className="btn btn--ghost" onClick={reset}>
           Clear form
         </button>
       </div>
 
-      {result ? <SendStatus ref={resultRef} outcome={result.outcome} values={result.values} recipient={recipient} /> : null}
+      {handedOff ? (
+        <div ref={resultRef} tabIndex={-1} className="notice notice--success contact-form__success" role="status">
+          <span aria-hidden="true">💬</span>
+          <div>
+            <p>
+              <strong>Almost there, {handedOff.values.name.trim().split(" ")[0]}!</strong>{" "}
+              {handedOff.opened
+                ? "WhatsApp opened in a new tab with your message ready. Tap Send in WhatsApp to deliver it."
+                : "Tap the button below to open WhatsApp with your message ready, then tap Send there."}
+            </p>
+            <p className="cluster">
+              <a className="btn btn--sm" href={handedOff.link} target="_blank" rel="noopener noreferrer">
+                {handedOff.opened ? "Open WhatsApp again" : "Open WhatsApp"}
+                <span className="visually-hidden"> (opens in a new tab)</span>
+              </a>
+              <a className="btn btn--ghost btn--sm" href={buildMailto(recipient, handedOff.values)}>
+                Email me instead
+              </a>
+            </p>
+          </div>
+        </div>
+      ) : null}
     </form>
-  );
-}
-
-interface SendStatusProps {
-  ref: Ref<HTMLDivElement>;
-  outcome: SendResult;
-  values: ContactFormValues;
-  recipient: string;
-}
-
-function SendStatus({ ref, outcome, values, recipient }: SendStatusProps) {
-  const firstName = values.name.trim().split(" ")[0];
-  const mailto = (
-    <a className="btn btn--sm" href={buildMailto(recipient, values)}>
-      Email me directly instead
-    </a>
-  );
-
-  if (outcome.status === "sent") {
-    return (
-      <div ref={ref} tabIndex={-1} className="notice notice--success contact-form__success" role="status">
-        <span aria-hidden="true">✅</span>
-        <p>
-          <strong>Thanks, {firstName}! Your message has been sent.</strong> I&rsquo;ll get back to you at {values.email.trim()} soon.
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <div ref={ref} tabIndex={-1} className="notice notice--danger contact-form__success" role="alert">
-      <span aria-hidden="true">⚠️</span>
-      <div>
-        <p>
-          <strong>Your message wasn&rsquo;t sent.</strong>{" "}
-          {outcome.status === "needs-activation"
-            ? "The contact form is still being set up, so it can't deliver messages yet."
-            : `${outcome.reason} Your message is still in the form, so you can try again.`}
-        </p>
-        <p>{mailto}</p>
-      </div>
-    </div>
   );
 }

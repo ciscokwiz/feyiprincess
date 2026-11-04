@@ -19,7 +19,7 @@ It is also her **COS 106 – Introduction to Web Technologies term project** (Mi
 | `/about/` | Education timeline, AltSchool Africa certificate card, career aspirations, "learning journey" skills (no fake percentages), non-technical skills, hobbies with illustrations, **Learning milestones table** |
 | `/projects/` | Five Customer Success case studies (Notion links open in a new tab), Nova Health Clinics highlighted, "coming soon" card |
 | `/planner/` | Working academic planner: daily checklist, weekly timetable, calendar, notes, reminders, progress dashboard, courses & data tools |
-| `/contact/` | Validated contact form that emails messages to her inbox (via FormSubmit), email/LinkedIn/GitHub links |
+| `/contact/` | Validated contact form that sends the message to her on WhatsApp; WhatsApp, email, LinkedIn and GitHub links |
 
 ## Tech
 
@@ -119,18 +119,16 @@ Everything is saved in the browser's `localStorage` under the versioned key `uo-
 
 ## Contact form
 
-Valid messages are posted from the browser to [FormSubmit](https://formsubmit.co), which emails them to
-`uchechukwuonuoma@gmail.com`. No account, server or API key is needed. The endpoint lives in `data/profile.ts`
-(`contactFormEndpoint`), and the sending code is `lib/contactSend.ts`.
+A valid message opens **WhatsApp** (a `wa.me` click-to-chat link) with a chat to her number and the visitor's name,
+email, phone and message already typed in. The visitor taps **Send** in WhatsApp. This works on phones (WhatsApp app)
+and computers (WhatsApp Web or Desktop), and needs no server, account or API key.
 
-- **One-time activation (required):** after the site is live, send one message through the form. FormSubmit then emails
-  `uchechukwuonuoma@gmail.com` an **"Activate Form"** link; click it once. Until then, messages are not delivered and the
-  form tells visitors so. Check the spam folder if the activation email doesn't arrive.
-- **Optional, after activating:** FormSubmit's confirmation gives a random alias. Put it in place of the address in
-  `contactFormEndpoint` (`https://formsubmit.co/ajax/<alias>`) to keep the email address out of the code.
-- The form shows "sent" only when FormSubmit confirms delivery. If sending fails, the visitor keeps their message and gets
-  an "Email me directly instead" link. A hidden honeypot field filters simple spam bots.
-- Tests intercept the FormSubmit request, so running them never sends real email.
+- The number is set once at the top of `data/profile.ts` (`WHATSAPP_NUMBER`), in international format with digits only:
+  country code then number, no `+` or leading `0` (e.g. `2348012345678`). The same number is listed under "Say hello".
+- The site can't see whether the visitor pressed Send in WhatsApp, so it never claims the message was delivered. If a
+  popup blocker stops WhatsApp opening, the form shows an "Open WhatsApp" button, plus an "Email me instead" link.
+- Phone numbers may start with `+` and a country code (e.g. `+2348012345678`); otherwise digits only, 7–15 digits.
+- Tests answer `wa.me` requests locally, so running them never opens a real chat.
 
 ## Deploy (GitHub + Vercel)
 
@@ -178,7 +176,7 @@ Because it is a static export, the `out/` folder can also be hosted on Netlify, 
 |---|---|
 | Event handling | Click, submit, change, blur, keydown (Escape, Tab trap, arrow keys) and hashchange handlers: `SiteHeader.tsx`, `ContactForm.tsx`, `PlannerApp.tsx` (arrow-key tabs), `CalendarView.tsx` (arrow-key day grid), `Timetable.tsx` |
 | DOM manipulation | `lib/dom.ts` (see list below), plus native `<dialog>` `showModal()`/`close()` in `components/planner/Modal.tsx` |
-| Form validation | `lib/contactValidation.ts` + `lib/schemas.ts` (`contactSchema`): required fields, email format, **digits-only phone** (7–15 digits). Per-field errors, `aria-invalid`, focus moves to the first invalid field, submit blocked. Planner forms reject blank titles |
+| Form validation | `lib/contactValidation.ts` + `lib/schemas.ts` (`contactSchema`): required fields, email format, **phone: digits with an optional + country code** (7–15 digits). Per-field errors, `aria-invalid`, focus moves to the first invalid field, submit blocked. Planner forms reject blank titles |
 | Dynamic content updates | The whole planner: counts, progress ring, filters, calendar dots, reminders banner and toasts, dashboard figures and SVG chart all update instantly from state |
 | Arrays & functions | `lib/dashboard.ts`, `lib/agenda.ts`, `lib/reminders.ts`, `lib/timetable.ts` (pure, unit-tested functions using `map`, `filter`, `reduce`, `sort`, `some`, `every`); `lib/plannerReducer.ts` |
 | Interactive task management | `components/planner/TodayChecklist.tsx`: add, edit, complete/uncomplete, delete with undo, filter (Today / Upcoming / All / Done), custom categories, celebration when the day is done |
@@ -225,7 +223,7 @@ tests/e2e/            Playwright (+ axe accessibility checks)
 
 ## Known limitations
 
-- No backend of its own: contact messages rely on FormSubmit (activate it once, see [Contact form](#contact-form)), and planner data lives in one browser until exported.
+- No backend of its own: contact messages are handed to WhatsApp (see [Contact form](#contact-form)), and planner data lives in one browser until exported.
 - Browser notifications only fire while the site is open in a tab. Some mobile browsers (e.g. Android Chrome) don't
   allow page notifications without a service worker; in-app reminders still work there.
 - Case study summaries are title-based until the owner replaces them (see To-dos).

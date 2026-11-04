@@ -20,6 +20,24 @@ export function firstInvalidField(errors: ContactErrors): ContactField | null {
   return CONTACT_FIELDS.find((f) => errors[f]) ?? null;
 }
 
+/**
+ * Builds a WhatsApp click-to-chat link (wa.me) that opens a chat with `number`
+ * and the visitor's message already typed in. `number` is in international
+ * format; any spaces, dashes or + are stripped.
+ */
+export function buildWhatsAppLink(number: string, values: ContactFormValues): string {
+  const text = [
+    "Hello Uchechukwu! I'm reaching out from your website.",
+    "",
+    `Name: ${values.name.trim()}`,
+    `Email: ${values.email.trim()}`,
+    `Phone: ${values.phone.trim()}`,
+    "",
+    values.message.trim(),
+  ].join("\n");
+  return `https://wa.me/${number.replace(/\D/g, "")}?text=${encodeURIComponent(text)}`;
+}
+
 /** Builds a mailto: link with the message pre-filled, as an honest way to actually send it. */
 export function buildMailto(to: string, values: ContactFormValues): string {
   const subject = `Hello from ${values.name.trim() || "your website"}`;

@@ -56,7 +56,7 @@ export default function ContactPage() {
           <div className="contact-main">
             <h2 id="contact-form-title">Send a message</h2>
             <p className="field__hint">All fields are required.</p>
-            <ContactForm recipient={profile.email} endpoint={profile.contactFormEndpoint} />
+            <ContactForm recipient={profile.email} whatsappNumber={profile.whatsappNumber} />
           </div>
         </div>
       </section>

@@ -7,6 +7,10 @@ import type { Profile } from "@/lib/types";
  * PHOTOS: drop files into /public/images/ using the filenames below. Until a
  * file exists, a branded placeholder is shown in exactly the same space.
  */
+// WhatsApp number in international format, digits only: country code then number, no + or leading 0 (e.g. 2348012345678).
+// The contact form opens WhatsApp with the visitor's message ready to send here, and it's listed under "Say hello".
+const WHATSAPP_NUMBER = "WHATSAPP_NUMBER";
+
 export const profile: Profile = {
   fullName: "Uchechukwu Precious Onuoma",
   preferredName: "Uchechukwu",
@@ -15,12 +19,10 @@ export const profile: Profile = {
 
   email: "uchechukwuonuoma@gmail.com",
   emailIsPlaceholder: false,
-  // Contact form messages go through FormSubmit (https://formsubmit.co), which forwards them to the email above.
-  // The first message triggers a one-time "Activate Form" email to that inbox; nothing is delivered until it is clicked.
-  // After activating, you can swap the address here for the random alias FormSubmit gives you, to keep it out of the code.
-  contactFormEndpoint: "https://formsubmit.co/ajax/uchechukwuonuoma@gmail.com",
+  whatsappNumber: WHATSAPP_NUMBER,
 
   socials: [
+    { label: "WhatsApp", href: `https://wa.me/${WHATSAPP_NUMBER}`, placeholder: false },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/uchechukwu-csm/", placeholder: false },
     { label: "GitHub", href: "https://github.com/uchechukwu-csm", placeholder: false },
   ],

@@ -82,8 +82,8 @@ export interface Profile {
   role: string;
   email: string;
   emailIsPlaceholder: boolean;
-  /** Where the contact form posts messages (a FormSubmit AJAX endpoint that forwards them to her inbox). */
-  contactFormEndpoint: string;
+  /** WhatsApp number in international format, digits only (e.g. 2348012345678). The contact form sends messages here. */
+  whatsappNumber: string;
   socials: SocialLink[];
   siteUrl: string;
   photos: {
