@@ -141,7 +141,7 @@ export default function HomePage() {
           <div className="home-video__copy reveal">
             <p className="eyebrow">Press play</p>
             <h2 id="video-title">A quick hello</h2>
-            <p>A short intro from me, about who I am and where I&rsquo;m headed. Captions are included.</p>
+            <p>A quick hello from me, straight from my phone. Press play and say hi back!</p>
           </div>
           <div className="reveal" style={cssVars({ "--reveal-delay": "120ms" })}>
             <IntroVideo />

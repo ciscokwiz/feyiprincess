@@ -88,14 +88,16 @@ files**. To use different filenames, change the paths in `data/profile.ts` or `d
 | Hashworth cover ✅ | `public/images/case-hashworth.jpg` | 1200 × 800 | Projects |
 | Savanna Agro cover ✅ | `public/images/case-savanna-agro.jpg` | 1200 × 800 | Projects |
 | Bioseco cover ✅ | `public/images/case-bioseco.jpg` | 1200 × 800 | Projects |
-| Intro video | `public/media/intro.webm` (or `.mp4`; update `type`) | 1280 × 720 | Home → "A quick hello" |
-| Intro video poster | `public/media/intro-poster.png` | 1280 × 720 | Poster frame for the video |
-| Intro captions | `public/media/intro-captions.vtt` | WebVTT | Captions track |
+| Intro video ✅ | `public/media/intro.mp4` | 720 × 1280 (portrait, H.264) | Home → "A quick hello" |
+| Intro video poster ✅ | `public/media/intro-poster.jpg` | 720 × 1280 | Poster frame for the video |
+| Intro captions | `public/media/intro-captions.vtt` | WebVTT | Captions track (shown automatically once the file exists) |
 | Certificate PDF | `public/certificates/altschool-product-marketing.pdf` | PDF | About → "View certificate" link (hidden until the file exists) |
 
-The intro video in the repo is a short **animated title card** (no people, no AI faces), labelled as a placeholder on
-the page. Replace `intro.webm`, the poster and the captions with the real recording. If you delete the video file, the
-page shows "Intro video coming soon" instead of a broken player.
+The intro video is her own 20-second recording, re-encoded for the web (H.264 MP4 that starts playing straight away,
+5 MB, voice normalised). Its player takes the video's shape from the poster size in `data/profile.ts`, so a portrait
+phone video gets a phone-shaped player. To add captions, write what she says as a WebVTT file at
+`public/media/intro-captions.vtt` and rebuild. If you delete the video file, the page shows "Intro video coming soon"
+instead of a broken player.
 
 ## The planner
 
@@ -155,7 +157,7 @@ Because it is a static export, the `out/` folder can also be hosted on Netlify, 
 | Images | `components/ui/PhotoSlot.tsx` (next/image, fixed aspect ratio); hobby illustrations `public/illustrations/*.svg` used in `app/about/page.tsx` and `app/page.tsx` | Descriptive `alt` text |
 | Hyperlinks | `components/layout/SiteHeader.tsx`, `SiteFooter.tsx`, CTAs in `app/page.tsx`, external Notion links in `app/projects/page.tsx` (`target="_blank" rel="noopener noreferrer"`), `mailto:` links | |
 | Lists | Nav (`<ul>`), education timeline (`<ol>`), skills chips, hobbies, task list, notes, upcoming deadlines (`<ol>`) | |
-| Multimedia | `components/home/IntroVideo.tsx`: `<video controls>` with `<source>`, `<track kind="captions">`, poster and fallback text | Captions: `public/media/intro-captions.vtt` |
+| Multimedia | `components/home/IntroVideo.tsx`: `<video controls>` with `<source>`, poster, fallback text, and a `<track kind="captions">` once a transcript file is added | Video: `public/media/intro.mp4` |
 
 ### CSS
 

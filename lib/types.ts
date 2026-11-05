@@ -71,6 +71,8 @@ export interface IntroVideo {
   /** Video file under /public. The <video> renders only if this file exists at build time. */
   src: string;
   type: "video/mp4" | "video/webm";
+  /** Optional second copy for browsers that can't play the first (e.g. WebM for open-source Chromium). */
+  fallback?: { src: string; type: "video/mp4" | "video/webm" };
   captions: string;
   poster: PhotoAsset;
   /** Shown next to the player so visitors know what they are watching. */

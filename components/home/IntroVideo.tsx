@@ -7,10 +7,12 @@ import { publicFileExists } from "@/lib/publicAssets";
  * shows an honest "coming soon" panel instead of a broken player.
  */
 export function IntroVideo() {
-  const { src, type, captions, poster, note } = profile.introVideo;
+  const { src, type, fallback, captions, poster, note } = profile.introVideo;
   const hasVideo = publicFileExists(src);
   const hasCaptions = publicFileExists(captions);
   const hasPoster = publicFileExists(poster.src);
+  // The poster matches the video's size, so it tells us the shape: phone videos are portrait.
+  const portrait = poster.height > poster.width;
 
   if (!hasVideo) {
     return (
@@ -25,10 +27,18 @@ export function IntroVideo() {
   }
 
   return (
-    <figure className="intro-video">
+    <figure className={`intro-video${portrait ? " intro-video--portrait" : ""}`}>
       <div className="intro-video__frame">
-        <video controls preload="metadata" playsInline poster={hasPoster ? poster.src : undefined} aria-describedby="intro-video-note">
+        <video
+          controls
+          preload="metadata"
+          playsInline
+          poster={hasPoster ? poster.src : undefined}
+          aria-describedby="intro-video-note"
+          style={{ aspectRatio: `${poster.width} / ${poster.height}` }}
+        >
           <source src={src} type={type} />
+          {fallback && publicFileExists(fallback.src) ? <source src={fallback.src} type={fallback.type} /> : null}
           {hasCaptions ? <track kind="captions" src={captions} srcLang="en" label="English" default /> : null}
           <p>
             Your browser can&rsquo;t play this video. You can <a href={src}>download it</a> instead.

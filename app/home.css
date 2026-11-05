@@ -221,6 +221,26 @@
   border-radius: calc(var(--radius-lg) - 8px);
   background: var(--c-burgundy-deep);
 }
+/* Portrait (phone) videos: a phone-shaped player that always fits on screen */
+.intro-video--portrait {
+  width: min(340px, 100%, calc((100vh - 220px) * 9 / 16));
+  min-width: min(240px, 100%);
+  margin-inline: auto;
+}
+.intro-video--portrait .intro-video__frame {
+  border-radius: 36px;
+  padding: 8px;
+  transform: rotate(-1.5deg);
+}
+.intro-video--portrait video {
+  border-radius: 28px;
+  object-fit: cover;
+}
+@media (min-width: 861px) {
+  .home-video:has(.intro-video--portrait) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
 .intro-video__note {
   margin-top: var(--space-5);
   font-size: var(--fs-sm);

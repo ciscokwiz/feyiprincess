@@ -73,8 +73,12 @@ test("home shows hero, currently strip, bio and a working intro video", async ({
   await expect(page.getByText(/healthcare management graduate and Customer Success professional with six years/)).toBeVisible();
   const video = page.locator("video");
   await expect(video).toHaveAttribute("controls", "");
-  await expect(video.locator("track[kind=captions]")).toHaveCount(1);
-  const ok = await page.request.get("/media/intro.webm");
+  await expect(video.locator('source[type="video/mp4"]')).toHaveAttribute("src", "/media/intro.mp4");
+  await expect(video).toHaveAttribute("poster", "/media/intro-poster.jpg");
+  // Portrait phone video gets a portrait player.
+  const box = await video.boundingBox();
+  expect(box && box.height > box.width).toBe(true);
+  const ok = await page.request.get("/media/intro.mp4");
   expect(ok.status()).toBe(200);
 });
 

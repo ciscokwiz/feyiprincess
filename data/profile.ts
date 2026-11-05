@@ -55,17 +55,20 @@ export const profile: Profile = {
   },
 
   introVideo: {
-    src: "/media/intro.webm",
-    type: "video/webm",
+    src: "/media/intro.mp4",
+    type: "video/mp4",
+    fallback: { src: "/media/intro.webm", type: "video/webm" },
+    // Add a WebVTT transcript here (e.g. /media/intro-captions.vtt) and the player shows it as captions.
     captions: "/media/intro-captions.vtt",
     poster: {
-      src: "/media/intro-poster.png",
-      alt: "Poster frame for Uchechukwu's intro video",
+      src: "/media/intro-poster.jpg",
+      alt: "Uchechukwu smiling in the sunshine at the start of her intro video",
       label: "Intro video poster frame",
-      width: 1280,
-      height: 720,
+      // Same size as the video (portrait), so the player keeps the right shape.
+      width: 720,
+      height: 1280,
     },
-    note: "This is a short animated title card for now. My recorded intro video is coming soon.",
+    note: "A 20-second hello from me, recorded in the sunshine.",
   },
 
   bio: [
